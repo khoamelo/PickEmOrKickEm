@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express');
 const morgan = require('morgan');
+const db = require('./db');
 
 // Create an Express application
 const app = express();
@@ -8,14 +9,21 @@ const app = express();
 app.use(express.json());
 
 //API routes
-app.get('/players', (req, res) => {
-    res.status(200).json({
-        player_id: 1234,
-        player_name: "LeBron James",
-        team_id: 3425,
-        position: "Forward",
-    });
-    console.log('Players route was hit');
+app.get('/teams', async (req, res) => {
+
+    try {
+        const results = await db.query('SELECT * FROM teams');
+        console.log(results);
+        res.status(200).json({
+            status: 'success',
+            results: results.rowCount.length,
+            data: {
+                teams: results.rows
+            }
+        })
+    } catch (err) {
+        console.log(err);
+    }
 });
 
 app.post('/addPlayers', (req, res) => {
