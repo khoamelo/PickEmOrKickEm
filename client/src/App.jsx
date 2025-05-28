@@ -2,7 +2,10 @@ import React from 'react'
 
 function App() {
   return (
-    <div>Welcome to Pick 'Em or Kick 'Em!</div>
+    <>
+      <h1>PICK 'EM OR KICK 'EM</h1>
+      <h2>Welcome to the Game!</h2>
+    </>
   )
 }
 
