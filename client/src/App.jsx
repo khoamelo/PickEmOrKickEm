@@ -7,9 +7,9 @@ function App() {
         PICK 'EM OR KICK 'EM
       </h1>
       
-      <h2 className='text-center'>
+      <h3 className='text-center text-success'>
         Find the optimal bet!
-      </h2>
+      </h3>
     </>
   )
 }
