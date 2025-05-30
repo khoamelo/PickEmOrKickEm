@@ -14,7 +14,7 @@ const Login = () => {
     <div id="login-page-container" className="flex flex-row h-screen bg-gradient-to-b from-blue-900 to-black">
       
       {/* Logo (left side) */}
-      <div id="logo-container" className="flex flex-col justify-center items-center w-2/3 text-white">
+      <div id="logo-container" className="flex flex-col justify-center items-center w-2/3 text-white mt-13">
         <h1 className="text-5xl font-bold flex items-center gap-2">
           <span className="relative flex items-center mr-3">
             <img
@@ -67,7 +67,7 @@ const Login = () => {
 
       {/* Login box (right side) */}
       <div className="w-1/2 flex items-center justify-center p-10">
-        <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-black">
+        <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-black -ml-15">
           <h2 className="text-2xl font-semibold mb-4">Login</h2>
             <form onSubmit={handleLogin}>
                 <div className="mb-4">
