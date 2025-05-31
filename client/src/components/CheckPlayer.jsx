@@ -25,7 +25,7 @@ const CheckPlayer = () => {
 
       <img 
         src={`https://cdn.nba.com/headshots/nba/latest/1040x760/${playerData.player_id}.png`} 
-        className='h-[150px] w-[205.5px]' 
+        className='h-[150px] w-[205.5px], bg-gray-900 rounded-full border-2 border-gray-600 shadow-xl p-2 hover:bg-green-500 transition duration-300' 
       />
 
       <button
