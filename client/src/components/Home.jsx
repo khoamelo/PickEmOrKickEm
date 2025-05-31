@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Home = () => {
 
   const navigate = useNavigate();
+  const [playerName, setPlayerName] = useState('');
 
-  const handleSearch = (event) => {
+  const handleSearch = async (event) => {
     event.preventDefault();
-    navigate('/check-player');
+
+    try {
+      const { data } = await axios.get(
+        `http://localhost:4005/api/v1/getPlayer/${encodeURIComponent(playerName)}`
+      );
+
+      console.log('Player data:', data);
+      navigate('/check-player', {state: { playerData: data.data.player } });
+    } catch (error) {
+      console.error('Error fetching player data:', error.response?.data || error.message);
+      alert('Player not found or server error')
+    }
   };
 
   return (
@@ -31,9 +44,11 @@ const Home = () => {
             <input 
             type='text' 
             placeholder='Enter Player Name...' 
+            value={playerName}
+            onChange={(e) => setPlayerName(e.target.value)}
             className='p-3 bg-gray-900 text-white border-2 border-gray-600 focus:outline-none focus:border-green-500 transition duration-300 w-[360px]'
             />
-            <button className='bg-gray-900 text-white border-2 border-gray-600 px-6 py-3 hover:text-green-500 hover:outline-none hover:border-green-500 transition duration-300 ml-1'>
+            <button type='submit' className='bg-gray-900 text-white border-2 border-gray-600 px-6 py-3 hover:text-green-500 hover:outline-none hover:border-green-500 transition duration-300 ml-1'>
               Search
             </button>
           </form>
