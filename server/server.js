@@ -2,10 +2,13 @@ require('dotenv').config()
 const express = require('express');
 const morgan = require('morgan');
 const db = require('./db');
+const cors = require('cors');
 const playerRoutes = require('./routes/playerRoutes');
 
 // Create an Express application
 const app = express();
+
+app.use(cors());
 
 // Middleware
 app.use(express.json());
