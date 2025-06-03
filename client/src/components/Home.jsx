@@ -38,11 +38,11 @@ const Home = () => {
         <h1 id='welcome-message' className='text-4xl font-bold'>
           🏀 Welcome to 
           <span className='shadow-xl ml-[12px] mr-[12px] text-green-500 bg-gray-900 p-2.5 rounded-xl border-2 border-black'>
-            Pick Em'
+            Pick 'Em
           </span> 
           Or 
           <span className='shadow-xl ml-[12px] mr-[12px] text-red-500 bg-gray-900 p-2.5 rounded-xl border-2 border-black'>
-            Kick Em'
+            Kick 'Em
           </span> 
           🏀
         </h1>

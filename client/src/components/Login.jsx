@@ -28,7 +28,7 @@ const Login = () => {
               className="w-10 h-10 absolute left-[110px] top-[50px] -rotate-20 z-10"
             />
             <span className="bg-gray-800 px-3 py-3 rounded-xl shadow-xl text-green-400 border-2 border-black -rotate-20">
-              Pick Em'
+              Pick 'Em
             </span>
           </span>
 
@@ -36,7 +36,7 @@ const Login = () => {
 
           <span className="relative flex items-center ml-3">
             <span className="bg-gray-800 px-3 py-3 rounded-xl shadow-xl text-red-400 border-2 border-black rotate-20">
-              Kick Em'
+              Kick 'Em
             </span>
             <img
               src='/images/thumbs_down.png'
