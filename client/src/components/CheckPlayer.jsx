@@ -1,8 +1,20 @@
-import { useLocation } from 'react-router-dom';
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const CheckPlayer = () => {
   const location = useLocation();
   const playerData = location.state?.playerData;
+  const navigate = useNavigate();
+
+  const handleLastNGames = (event) => {
+    event.preventDefault();
+    navigate('/last-n-games', { state: { playerData } });
+  };
+
+  const handleH2H = (event) => {
+    event.preventDefault();
+    navigate('/head-to-head', { state: { playerData } });
+  };
 
   if (!playerData) {
     return <p>No player data found.</p>;
@@ -25,14 +37,27 @@ const CheckPlayer = () => {
 
       <img 
         src={`https://cdn.nba.com/headshots/nba/latest/1040x760/${playerData.player_id}.png`} 
-        className='h-[150px] w-[205.5px], bg-gray-900 rounded-full border-2 border-gray-600 shadow-xl p-2 hover:bg-green-500 transition duration-300' 
+        className='h-[150px] w-[205.5px] bg-gray-900 rounded-full border-2 border-gray-600 shadow-xl p-2 hover:bg-green-500 transition duration-300' 
       />
+      <div id='buttons' className='flex flex-row gap-10 text-base'>
+        <button
+          className='bg-gray-900 w-[205.5px] text-white border-2 border-gray-600 px-6 py-3 hover:text-red-500 hover:outline-none hover:border-red-500 transition duration-300'
+          onClick={() => navigate('/home')} >
+            ⬅️ Back to Search
+        </button>
+        <button
+          className='bg-gray-900 w-[205.5px] text-white border-2 border-gray-600 px-6 py-3 hover:text-green-500 hover:outline-none hover:border-green-500 transition duration-300'
+          onClick={handleLastNGames} >
+            Last 'N' Games
+        </button>
+        <button
+          className='bg-gray-900 w-[205.5px] text-white border-2 border-gray-600 px-6 py-3 hover:text-green-500 hover:outline-none hover:border-green-500 transition duration-300'
+          onClick={handleH2H} >
+            Head-2-Head Games
+        </button>
+      </div>
+      
 
-      <button
-        className='bg-gray-900 w-[205.5px] text-white border-2 border-gray-600 px-6 py-3 hover:text-green-500 hover:outline-none hover:border-green-500 transition duration-300'
-        onClick={() => window.location.href = '/home'} >
-            Back to Search
-      </button>
     </div>
 
 
