@@ -69,7 +69,7 @@ const Head2HeadGames = () => {
                 <select 
                     value={selectedStat} 
                     onChange={(e) => setSelectedStat(e.target.value)} 
-                    className='text-white p-2 rounded-xl bg-gray-900 border-2 border-gray-600 focus:outline-none focus:border-green-500'
+                    className='text-white p-2 rounded-xl bg-gray-900 border-2 border-gray-600 focus:outline-none focus:border-green-500 focus:text-green-500 transition duration-300'
                 >
                     <option value="" disabled> --Select Stat--</option>
                     <option value="pts">Points</option>
@@ -87,7 +87,7 @@ const Head2HeadGames = () => {
                     step='0.5'
                     value={propLine} 
                     onChange={(e) => setPropLine(e.target.value)} 
-                    className='text-white p-2 rounded-xl bg-gray-900 border-2 border-gray-600 focus:outline-none focus:border-green-500' 
+                    className='text-white p-2 rounded-xl bg-gray-900 border-2 border-gray-600 focus:outline-none focus:border-green-500 focus:text-green-500 transition duration-300' 
                     placeholder='e.g., 27.5'
                 />
             </label>
@@ -98,7 +98,7 @@ const Head2HeadGames = () => {
                 <select 
                     value={oppTeam} 
                     onChange={(e) => setOppTeam(e.target.value)} 
-                    className='text-white p-2 rounded-xl bg-gray-900 border-2 border-gray-600 focus:outline-none focus:border-green-500'
+                    className='text-white p-2 rounded-xl bg-gray-900 border-2 border-gray-600 focus:outline-none focus:border-green-500 focus:text-green-500 transition duration-300'
                     placeholder='Select opposing team'
                 >
                     <option value="" disabled> --Select Opposing Team--</option>
