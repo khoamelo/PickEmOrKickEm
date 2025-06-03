@@ -10,11 +10,20 @@ const Home = () => {
   const handleSearch = async (event) => {
     event.preventDefault();
 
+    if (!playerName.trim()) {
+      alert('Please enter a player name');
+      return;
+    }
+
     try {
       const { data } = await axios.get(
         `http://localhost:4005/api/v1/getPlayer/${encodeURIComponent(playerName)}`
       );
 
+      if (data.results === 0) {
+      alert('Player not found');
+      return;
+    }
       console.log('Player data:', data);
       navigate('/check-player', {state: { playerData: data.data.player } });
     } catch (error) {
