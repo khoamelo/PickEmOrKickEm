@@ -85,6 +85,7 @@ const LastNGames = () => {
             <input 
               type='number' 
               step='0.5'
+              min='0'
               value={propLine} 
               onChange={(e) => setPropLine(e.target.value)} 
               className='text-white p-2 rounded-xl bg-gray-900 border-2 border-gray-600 focus:outline-none focus:border-green-500 focus:text-green-500 transition duration-300' 
@@ -96,7 +97,8 @@ const LastNGames = () => {
           <label>
             <span className='mb-1 font-bold'>Number of Games:</span>
             <input 
-              type='number' 
+              type='number'
+              min='1' 
               value={numGames} 
               onChange={(e) => setNumGames(e.target.value)} 
               className='text-white p-2 rounded-xl bg-gray-900 border-2 border-gray-600 focus:outline-none focus:border-green-500 focus:text-green-500 transition duration-300' 

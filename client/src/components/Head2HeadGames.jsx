@@ -85,6 +85,7 @@ const Head2HeadGames = () => {
                 <input 
                     type='number' 
                     step='0.5'
+                    min='0'
                     value={propLine} 
                     onChange={(e) => setPropLine(e.target.value)} 
                     className='text-white p-2 rounded-xl bg-gray-900 border-2 border-gray-600 focus:outline-none focus:border-green-500 focus:text-green-500 transition duration-300' 
