@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import { Chart as ChartJS } from 'chart.js/auto';
 import { Bar, Doughnut } from 'react-chartjs-2';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 ChartJS.register(annotationPlugin);
 
 const StatGraph = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const playerData = location.state?.playerData;
   const h2hData = location.state?.h2hData || [];
@@ -69,7 +70,7 @@ const StatGraph = () => {
         <div id='buttons' className='flex flex-col gap-10 text-base'>
           <button
             className='bg-gray-900 w-[205.5px] text-white border-2 border-gray-600 px-6 py-3 hover:text-red-500 hover:outline-none hover:border-red-500 transition duration-300'
-            onClick={() => window.history.back()}>
+            onClick={() => navigate('/check-player', { state: { playerData } })}>
             ⬅️ Back to Search
           </button>
           <button
