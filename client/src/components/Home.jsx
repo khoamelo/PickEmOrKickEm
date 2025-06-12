@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -6,6 +6,30 @@ const Home = () => {
 
   const navigate = useNavigate();
   const [playerName, setPlayerName] = useState('');
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    const fetchUsername = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      try {
+        const res = await axios.get('http://localhost:4005/dashboard', {
+          headers: { token }
+        });
+        setUsername(res.data.user_name);
+      } catch (err) {
+        setUsername('');
+        alert(err.response?.data?.message || 'Error fetching username');
+      }
+    };
+    fetchUsername();
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setUsername('');
+    navigate('/');
+  };
 
   const handleSearch = async (event) => {
     event.preventDefault();
@@ -34,7 +58,19 @@ const Home = () => {
 
   return (
     <div id='home-container' className='flex flex-col items-center justify-center h-screen bg-gradient-to-b from-blue-900 to-black text-white gap-5'>
+        {/* Logout Button */}
+        <button
+          onClick={handleLogout}
+          className="absolute top-6 right-8 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-md transition"
+        >
+          Log Out
+        </button>
         {/* Welcome Message */}
+        {username && (
+          <div className="text-3xl font-semibold text-white -mt-[100px] mb-[100px]">
+            Hello, {username.toUpperCase()}!
+          </div>
+        )}
         <h1 id='welcome-message' className='text-4xl font-bold'>
           🏀 Welcome to 
           <span className='shadow-xl ml-[12px] mr-[12px] text-green-500 bg-gray-900 p-2.5 rounded-xl border-2 border-black'>

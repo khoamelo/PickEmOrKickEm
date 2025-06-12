@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
   const navigate = useNavigate();
+  const [form, setForm] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
 
-  const handleLogin = (event) => {
+  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleLogin = async (event) => {
     event.preventDefault();
-    // Handle logic here later (authentication)
-    navigate('/home');
+    setError('');
+    try {
+      const res = await axios.post('http://localhost:4005/auth/loginUser', form);
+      localStorage.setItem('token', res.data.token);
+
+      navigate('/home');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Login failed');
+    }
   };
 
   return (
@@ -67,34 +79,52 @@ const Login = () => {
 
       {/* Login box (right side) */}
       <div className="w-1/2 flex items-center justify-center p-10">
-        <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-black -ml-15">
+        <div className="bg-gray-800 p-8 rounded-xl shadow-lg w-full max-w-md text-white -ml-15 border-2 border-gray-600">
           <h2 className="text-2xl font-semibold mb-4">Login</h2>
-            <form onSubmit={handleLogin}>
-                <div className="mb-4">
-                <label className="block text-sm font-medium mb-2" htmlFor="username">Username</label>
-                <input
-                    type="text"
-                    id="username"
-                    className="w-full p-2 border border-gray-300 rounded-lg"
-                    placeholder="Enter your username"
-                />
-                </div>
-                <div className="mb-4">
-                <label className="block text-sm font-medium mb-2" htmlFor="password">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    className="w-full p-2 border border-gray-300 rounded-lg"
-                    placeholder="Enter your password"
-                />
-                </div>
-                <button
-                type="submit"
-                className="w-full bg-gray-800 text-white py-2 rounded-lg hover:text-green-400 transition duration-200"
-                >
-                Login
-                </button>
-            </form>
+          <form onSubmit={handleLogin}>
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-2" htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                className="w-full p-2 border-2 border-gray-600 bg-gray-900 rounded-lg"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-2" htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                className="w-full p-2 border-2 border-gray-600 bg-gray-900 rounded-lg"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+            {error && <div className="mb-4 text-red-600">{error}</div>}
+            <button
+              type="submit"
+              className="w-[200px] ml-[95px] mt-[15px] bg-gray-900 text-white py-2 rounded-lg border-1 hover:bg-green-400 transition duration-200 cursor-pointer"
+            >
+              Login
+            </button>
+          </form>
+          <div className="mt-4 text-center text-white">
+            <span>Don't have an account? </span>
+            <button
+              className="text-blue-600 underline hover:text-blue-800 transition duration-200 cursor-pointer"
+              onClick={() => navigate('/register')}
+            >
+              Register
+            </button>
+          </div>
         </div>
       </div>
     </div>
