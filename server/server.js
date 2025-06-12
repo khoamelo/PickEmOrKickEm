@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const db = require('./db');
 const cors = require('cors');
 const playerRoutes = require('./routes/playerRoutes');
+const authRoutes = require('./routes/authRoutes');
+const dashboardRoute = require('./routes/dashboardRoute');
 
 // Create an Express application
 const app = express();
@@ -16,6 +18,8 @@ app.use(morgan('dev'));
 
 // API routes
 app.use('/api/v1/', playerRoutes);
+app.use('/auth', authRoutes);
+app.use('/dashboard', dashboardRoute);
 
 // Define the port number the server will listen on
 const port = process.env.PORT || 3000;
