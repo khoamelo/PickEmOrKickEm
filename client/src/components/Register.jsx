@@ -49,7 +49,7 @@ const Register = () => {
                     required />
                 <button 
                     type="submit" 
-                    className='w-[150px] ml-[25px] mt-[20px] border2 border-gray-600 bg-gray-900 p-2 hover:bg-green-500 transition duration-300 rounded-xl'>
+                    className='w-[150px] ml-[25px] mt-[20px] border2 border-gray-600 bg-gray-900 p-2 hover:bg-green-500 transition duration-300 rounded-xl cursor-pointer'>
                         Register
                 </button>
             </div>

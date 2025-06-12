@@ -7,19 +7,45 @@ import Head2HeadGames from './components/Head2HeadGames';
 import LastNGames from './components/LastNGames';
 import StatGraph from './components/StatGraph';
 import Register from './components/Register';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
 
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Login />}></Route>
-        <Route path='/register' element={<Register />}></Route>
-        <Route path='/home' element={<Home />}></Route>
-        <Route path='/check-player' element={<CheckPlayer />}></Route>
-        <Route path='/head-to-head' element={<Head2HeadGames />}></Route>
-        <Route path='/last-n-games' element={<LastNGames />}></Route>
-        <Route path='/results' element={<StatGraph />}></Route>
+        <Route path='/' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+        <Route 
+          path='/home' 
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>} />
+        <Route 
+          path='/check-player' 
+          element={
+            <ProtectedRoute>
+              <CheckPlayer />
+            </ProtectedRoute>} />
+        <Route 
+          path='/head-to-head' 
+          element={
+            <ProtectedRoute>
+              <Head2HeadGames />
+            </ProtectedRoute>} />
+        <Route 
+          path='/last-n-games' 
+          element={
+            <ProtectedRoute>
+              <LastNGames />
+            </ProtectedRoute>} />
+        <Route 
+          path='/results' 
+          element={
+            <ProtectedRoute>
+              <StatGraph />
+            </ProtectedRoute>} />
       </Routes>
     </Router>
   )
