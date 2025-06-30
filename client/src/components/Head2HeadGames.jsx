@@ -74,8 +74,21 @@ const Head2HeadGames = () => {
                     <option value="" disabled> --Select Stat--</option>
                     <option value="pts">Points</option>
                     <option value="reb">Rebounds</option>
+                    <option value="dreb">Defensive Rebounds</option>
+                    <option value="oreb">Offensive Rebounds</option>
                     <option value="ast">Assists</option>
                     <option value="blk">Blocked Shots</option>
+                    <option value="stl">Steals</option>
+                    <option value="tov">Turnovers</option>
+                    <option value="fg3m">3-PT Made</option>
+                    <option value="fg3a">3-PT Attempted</option>
+                    <option value="fga">FG Attempted</option>
+                    <option value="ftm">Free Throws Made</option>
+                    <option value="pts+ast">Pts+Asts</option>
+                    <option value="reb+ast">Rebs+Asts</option>
+                    <option value="pts+reb">Pts+Rebs</option>
+                    <option value="blk+stl">Blks+Stls</option>
+                    <option value="pts+reb+ast">Pts+Rebs+Asts</option>
                 </select>
             </label>
 

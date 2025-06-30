@@ -19,10 +19,20 @@ const StatGraph = () => {
   const rawChartData = h2hData.length > 0 ? h2hData : gameData;
   const chartData = rawChartData.filter(game => game.min <= minsPlayed);
 
+  const computeStat = (game) => {
+    if (selectedStat.includes('+')) {
+      return selectedStat
+        .split('+')
+        .map(stat => game[stat.trim()])
+        .reduce((a, b) => a + b, 0);
+    }
+    return game[selectedStat];
+  };
+
   const totalGames = chartData.length || 1;
-  const aboveCount = chartData.filter(g => g[selectedStat] > propLine).length;
-  const equalCount = chartData.filter(g => g[selectedStat] === propLine).length;
-  const belowCount = chartData.filter(g => g[selectedStat] < propLine).length;
+  const aboveCount = chartData.filter(g => computeStat(g) > propLine).length;
+  const equalCount = chartData.filter(g => computeStat(g) === propLine).length;
+  const belowCount = chartData.filter(g => computeStat(g) < propLine).length;
 
   const halfDoughnutData = (count, total, color) => ({
     labels: ['', ''],
@@ -85,7 +95,7 @@ const StatGraph = () => {
       <div id='chart_gauge_slide'className='flex flex-col w-full md:w-2/3 -mt-[30px]'>
         <div id='gauges' className="flex justify-around gap-1 mb-1 -mt-[90px] text-sm">
           <div className="flex flex-col items-center text-white">
-            <h4 className="mt-[70px] mb-[5px] font-bold">Over {propLine} {selectedStat}</h4>
+            <h4 className="mt-[70px] mb-[5px] font-bold w-[120px] text-center truncate">Over {propLine} {selectedStat}</h4>
             <Doughnut
               data={halfDoughnutData(aboveCount, totalGames, 'rgba(0, 255, 0, 0.7)')}
               options={halfDoughnutOptions}
@@ -96,7 +106,7 @@ const StatGraph = () => {
             <p className="-mt-[60px] text-sm">{((aboveCount / totalGames) * 100).toFixed(1)}%</p>
           </div>
           <div className="flex flex-col items-center text-white">
-            <h4 className="mt-[70px] mb-[5px] font-bold">Pushed {propLine} {selectedStat}</h4>
+            <h4 className="mt-[70px] mb-[5px] font-bold w-[120px] text-center truncate">Pushed {propLine} {selectedStat}</h4>
             <Doughnut
               data={halfDoughnutData(equalCount, totalGames, 'rgba(128, 128, 128, 0.7)')}
               options={halfDoughnutOptions}
@@ -107,7 +117,7 @@ const StatGraph = () => {
             <p className="-mt-[60px] text-sm">{((equalCount / totalGames) * 100).toFixed(1)}%</p>
           </div>
           <div className="flex flex-col items-center text-white">
-            <h4 className="mt-[70px] mb-[5px] font-bold">Under {propLine} {selectedStat}</h4>
+            <h4 className="mt-[70px] mb-[5px] font-bold w-[120px] text-center truncate">Under {propLine} {selectedStat}</h4>
             <Doughnut
               data={halfDoughnutData(belowCount, totalGames, 'rgba(255, 0, 0, 0.7)')}
               options={halfDoughnutOptions}
@@ -125,15 +135,15 @@ const StatGraph = () => {
               labels: chartData.map(game => `${game.game_date} ${game.matchup}`),
               datasets: [{
                 label: selectedStat,
-                data: chartData.map(game => game[selectedStat]),
+                data: chartData.map(game => computeStat(game)),
                 backgroundColor: chartData.map(game => {
-                  const stat = game[selectedStat];
+                  const stat = computeStat(game);
                   if (stat > propLine) return 'rgba(0, 255, 0, 0.6)';
                   if (stat === propLine) return 'rgba(128, 128, 128, 0.6)';
                   return 'rgba(255, 0, 0, 0.6)';
                 }),
                 borderColor: chartData.map(game => {
-                  const stat = game[selectedStat];
+                  const stat = computeStat(game);
                   if (stat > propLine) return 'rgba(0, 128, 0, 1)';
                   if (stat === propLine) return 'rgba(105, 105, 105, 1)';
                   return 'rgba(139, 0, 0, 1)';

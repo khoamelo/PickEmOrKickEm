@@ -16,6 +16,7 @@ const CheckPlayer = () => {
     navigate('/head-to-head', { state: { playerData } });
   };
 
+
   if (!playerData) {
     return <p>No player data found.</p>;
   }
