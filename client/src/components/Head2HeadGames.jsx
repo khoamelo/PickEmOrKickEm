@@ -5,27 +5,32 @@ import axios from 'axios';
 const Head2HeadGames = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const playerData = location.state?.playerData;
+  const playerData = location.state?.playerData; // Retrieve player data from the location state
 
+  // State for selected stat, prop line, and opposing team
   const [selectedStat, setSelectedStat] = useState('');
   const [propLine, setPropLine] = useState('');
   const [oppTeam, setOppTeam] = useState('');
 
+  // Handle form submission to fetch head-to-head data and navigate to results
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Validate all fields are filled
     if (!oppTeam || !propLine || !selectedStat) {
       alert("Please fill in all fields.");
       return;
     }
 
     try {
+      // Fetch head-to-head games from backend API
       const { data } = await axios.get(
         `http://localhost:4005/api/v1/getHeadToHead/${playerData.player_id}/${oppTeam}`
       );
 
       console.log('Player H2H data:', data);
 
+      // Navigate to results page, passing player data, H2H data, and respective chosen stats in state
       navigate('/results', {
         state: {
           playerData,
@@ -43,6 +48,8 @@ const Head2HeadGames = () => {
 
   return (
     <div className='text-xl flex flex-col items-center justify-center gap-4 h-screen bg-gradient-to-b from-blue-900 to-black text-white'>
+      
+      {/* Display player info */}
       <h2>
         <span className='font-bold mr-2'>
           Player ID:
@@ -61,6 +68,7 @@ const Head2HeadGames = () => {
         className='h-[150px] w-[205.5px] bg-gray-900 rounded-full border-2 border-gray-600 shadow-xl p-2 hover:bg-green-500 transition duration-300' 
       />
 
+      {/* Form for selecting stat, prop line, and opposing team */}
       <form onSubmit={handleSubmit} className='flex flex-col items-center gap-4 w-full max-w-md'>
         <div id='selections' className='flex flex-row items-center justify-center gap-10 w-full max-w-md '>
             {/* Dropdown for stat selection */}
@@ -106,7 +114,7 @@ const Head2HeadGames = () => {
                 />
             </label>
 
-            {/* Input for opposing team */}
+            {/* Dropdown for opposing team */}
             <label className=''>
                 <span className='font-bold mb-1'>Opposing Team:</span>
                 <select 
@@ -150,6 +158,7 @@ const Head2HeadGames = () => {
             </label>
         </div>
 
+        {/* Navigation buttons */}
         <div id='nav-buttons' className='flex flex-row gap-10 text-base mt-5'>
             <button
                 type='button'

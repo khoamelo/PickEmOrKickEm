@@ -5,14 +5,17 @@ import axios from 'axios';
 const Home = () => {
 
   const navigate = useNavigate();
+  // State to hold chosen NBA player name and username of user
   const [playerName, setPlayerName] = useState('');
   const [username, setUsername] = useState('');
 
+  // Fetch username from backend when component mounts
   useEffect(() => {
     const fetchUsername = async () => {
       const token = localStorage.getItem('token');
       if (!token) return;
       try {
+        // Request username using the JWT token
         const res = await axios.get('http://localhost:4005/dashboard', {
           headers: { token }
         });
@@ -25,21 +28,25 @@ const Home = () => {
     fetchUsername();
   }, []);
 
+  // Handle user logout: remove token, clear username, and redirect to login
   const handleLogout = () => {
     localStorage.removeItem('token');
     setUsername('');
     navigate('/');
   };
 
+  // Handle player search form submission
   const handleSearch = async (event) => {
     event.preventDefault();
 
+    // Validate input
     if (!playerName.trim()) {
       alert('Please enter a player name');
       return;
     }
 
     try {
+      // Fetch player data from backend API
       const { data } = await axios.get(
         `http://localhost:4005/api/v1/getPlayer/${encodeURIComponent(playerName)}`
       );
@@ -49,6 +56,7 @@ const Home = () => {
       return;
     }
       console.log('Player data:', data);
+      // Navigate to CheckPlayer page with player data
       navigate('/check-player', {state: { playerData: data.data.player } });
     } catch (error) {
       console.error('Error fetching player data:', error.response?.data || error.message);

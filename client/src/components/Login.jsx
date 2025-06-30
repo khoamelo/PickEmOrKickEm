@@ -4,16 +4,21 @@ import axios from 'axios';
 
 const Login = () => {
   const navigate = useNavigate();
+  // State to hold form data and error messages
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
 
+  // Handle input changes for email and password fields
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
+  // Handle form submission for login
   const handleLogin = async (event) => {
     event.preventDefault();
     setError('');
     try {
+      // Send login request to backend API with email and password
       const res = await axios.post('http://localhost:4005/auth/loginUser', form);
+      // Store the JWT token in localStorage for authentication if successful
       localStorage.setItem('token', res.data.token);
 
       navigate('/home');

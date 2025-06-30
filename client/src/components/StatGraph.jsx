@@ -4,11 +4,14 @@ import { Chart as ChartJS } from 'chart.js/auto';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+// Register the annotation plugin for Chart.js
 ChartJS.register(annotationPlugin);
 
 const StatGraph = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Retrieve player data, H2H data, game data, selected stat, and prop line from the location state
   const playerData = location.state?.playerData;
   const h2hData = location.state?.h2hData || [];
   const gameData = location.state?.gameData || [];
@@ -16,24 +19,33 @@ const StatGraph = () => {
   const propLine = location.state?.propLine;
   const [minsPlayed, setMinsPlayed] = useState(68);
 
+  // Use head-to-head data if available, otherwise use game data
   const rawChartData = h2hData.length > 0 ? h2hData : gameData;
+  // Filter chart data based on minutes played
   const chartData = rawChartData.filter(game => game.min <= minsPlayed);
 
+  // Function to compute state value for a game, supporting combined stats (e.g., "pts + ast")
   const computeStat = (game) => {
     if (selectedStat.includes('+')) {
       return selectedStat
+        // Split the selected stat into individual stats in an array
         .split('+')
+        // Trim whitespace from each stat and set each stat to its value in the game object
         .map(stat => game[stat.trim()])
+        // Add all numbers in the array together
         .reduce((a, b) => a + b, 0);
     }
+    // If no '+' in selectedStat, return the value directly from the game object
     return game[selectedStat];
   };
 
+  // Calculate counts for above, equal, and below prop line
   const totalGames = chartData.length || 1;
   const aboveCount = chartData.filter(g => computeStat(g) > propLine).length;
   const equalCount = chartData.filter(g => computeStat(g) === propLine).length;
   const belowCount = chartData.filter(g => computeStat(g) < propLine).length;
 
+  // Prepare data for the half doughnut charts
   const halfDoughnutData = (count, total, color) => ({
     labels: ['', ''],
     datasets: [{
@@ -43,6 +55,8 @@ const StatGraph = () => {
     }]
   });
 
+  // Options for the half doughnut charts
+  // Set the circumference to 180 degrees, rotation to 270 degrees, and cutout
   const halfDoughnutOptions = {
     circumference: 180,
     rotation: 270,
@@ -68,7 +82,7 @@ const StatGraph = () => {
   return (
     <div className='text-xl flex flex-col md:flex-row items-center justify-center gap-6 h-screen bg-gradient-to-b from-blue-900 to-black text-white overflow-x-hidden px-4'>
 
-      
+      { /* Player Info Section and Navigation buttons */}
       <div id='player_info' className='flex flex-col items-center justify-center gap-4 mb-4 w-full md:w-1/3'>
         <h2><span className='font-bold mr-2'>Player ID:</span>{playerData.player_id}</h2>
         <p><span className='font-bold mr-2'>Name:</span>{playerData.full_name}</p>
@@ -91,9 +105,12 @@ const StatGraph = () => {
         </div>
       </div>
 
-
+      {/* Chart Section */}
       <div id='chart_gauge_slide'className='flex flex-col w-full md:w-2/3 -mt-[30px]'>
+        
+        {/* Half-doughnut charts for Over, Push, Under */}
         <div id='gauges' className="flex justify-around gap-1 mb-1 -mt-[90px] text-sm">
+          {/* Over gauge */}
           <div className="flex flex-col items-center text-white">
             <h4 className="mt-[70px] mb-[5px] font-bold w-[120px] text-center truncate">Over {propLine} {selectedStat}</h4>
             <Doughnut
@@ -105,6 +122,7 @@ const StatGraph = () => {
             />
             <p className="-mt-[60px] text-sm">{((aboveCount / totalGames) * 100).toFixed(1)}%</p>
           </div>
+          {/* Push gauge */}
           <div className="flex flex-col items-center text-white">
             <h4 className="mt-[70px] mb-[5px] font-bold w-[120px] text-center truncate">Pushed {propLine} {selectedStat}</h4>
             <Doughnut
@@ -116,6 +134,7 @@ const StatGraph = () => {
             />
             <p className="-mt-[60px] text-sm">{((equalCount / totalGames) * 100).toFixed(1)}%</p>
           </div>
+          {/* Under gauge */}
           <div className="flex flex-col items-center text-white">
             <h4 className="mt-[70px] mb-[5px] font-bold w-[120px] text-center truncate">Under {propLine} {selectedStat}</h4>
             <Doughnut
@@ -129,6 +148,7 @@ const StatGraph = () => {
           </div>
         </div>
 
+        {/* Bar chart for game stats */}
         <div id='bar_chart' className="w-full h-[400px] bg-gray-900 rounded-xl border-2 border-gray-600 p-4">
           <Bar
             data={{
@@ -188,6 +208,8 @@ const StatGraph = () => {
               },
             }}
           />
+
+          {/* Slider to filter games by minutes played */}
           <div id='minute-slider' className='mt-[20px] ml-[320px]'>
             <input
               type="range"
