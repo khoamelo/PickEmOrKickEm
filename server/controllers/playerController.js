@@ -3,11 +3,13 @@ const db = require('../db');
 // GET /getPlayer/:name
 exports.getPlayer = async (req, res) => {
     try {
+        // Query the database for the player with the given name
         const results = await db.query(
             `SELECT * FROM players
              WHERE unaccent(LOWER(full_name)) = unaccent(LOWER($1))`,
             [req.params.name]
         );
+        // Respond with the player data, number of results, and status
         res.status(200).json({
             status: 'success',
             results: results.rowCount,
@@ -22,7 +24,9 @@ exports.getPlayer = async (req, res) => {
 // GET /getGames/:player_id?n=5
 exports.getGames = async (req, res) => {
     try {
+        // Parse the number of games to fetch from the query parameter, defaulting to 5
         const n_games = parseInt(req.query.n) || 5;
+        // Query the database for the last N games of the player with the given ID
         const results = await db.query(
             `SELECT * FROM game_logs
              WHERE player_id = $1
@@ -30,6 +34,7 @@ exports.getGames = async (req, res) => {
              LIMIT $2`,
             [req.params.player_id, n_games]
         );
+        // Respond with the game data, number of results, and status
         res.status(200).json({
             status: 'success',
             results: results.rowCount,
@@ -44,6 +49,7 @@ exports.getGames = async (req, res) => {
 // GET /getHeadToHead/:player_id/:team_name
 exports.getHeadToHead = async (req, res) => {
     try {
+        // Query the database for head-to-head matchups of the player against the specified team
         const results = await db.query(
             `SELECT * FROM game_logs
              WHERE player_id = $1
@@ -51,6 +57,7 @@ exports.getHeadToHead = async (req, res) => {
              ORDER BY game_date DESC`,
             [req.params.player_id, req.params.team_name]
         );
+        // Respond with the head-to-head game data, number of results, and status
         res.status(200).json({
             status: 'success',
             results: results.rowCount,
@@ -65,6 +72,7 @@ exports.getHeadToHead = async (req, res) => {
 // GET /playerPlayedOpponentDidNot/:playerA_id/:playerB_id/:teamA/:teamB
 exports.getGamesWithoutOpponent = async (req, res) => {
     try {
+        // Query the database for games where player A played against teams that player B did not play against
         const results = await db.query(
             `SELECT * FROM game_logs
              WHERE player_id = $1
@@ -76,6 +84,7 @@ exports.getGamesWithoutOpponent = async (req, res) => {
              ORDER BY game_date DESC`,
             [req.params.playerA_id, req.params.playerB_id, req.params.teamA, req.params.teamB]
         );
+        // Respond with the filtered game data, number of results, and status
         res.status(200).json({
             status: 'success',
             results: results.rowCount,

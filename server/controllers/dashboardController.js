@@ -11,6 +11,7 @@ exports.getDashboard = async (req, res) => {
             [req.user.id]
         );
 
+        // Respond with the user's name (e.g., { user_name: "kmelo" })
         res.json(user.rows[0]);
 
     } catch (err) {

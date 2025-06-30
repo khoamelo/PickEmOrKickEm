@@ -23,6 +23,7 @@ exports.registerUser = async (req, res) => {
         const saltRounds = 10;
         const bcryptPassword = await bcrypt.hash(password, saltRounds);
 
+        // Insert the new user into the database
         const newUser = await db.query(
             `INSERT INTO users (user_name, user_email, user_password)
              VALUES ($1, $2, $3)
@@ -34,6 +35,7 @@ exports.registerUser = async (req, res) => {
         // Generate a JWT token for the new user
         const token = jwtGenerator(newUser.rows[0].user_id);
 
+        // Respond with the generated token
         res.json({ token });
 
     } catch (err) {
@@ -76,6 +78,7 @@ exports.loginUser = async (req, res) => {
         // If valid, generate a JWT token so the user can access protected routes
         const token = jwtGenerator(user.rows[0].user_id);
 
+        // Respond with the generated token
         res.json({ token });
 
     } catch (err) {
@@ -87,6 +90,7 @@ exports.loginUser = async (req, res) => {
 // GET /verifyUser
 exports.verifyUser = async (req, res) => {
     try {
+        // If token is valid, respond with true
         res.json(true);
     } catch (err) {
         console.error(err);
