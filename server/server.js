@@ -11,7 +11,10 @@ const dashboardRoute = require('./routes/dashboardRoute');
 const app = express();
 
 app.use(cors({
-  origin: 'https://main.d261zxqkub55fi.amplifyapp.com', // Replace with your actual Amplify domain
+  origin: [
+    'http://localhost:5173',
+    'https://main.d261zxqkub55fi.amplifyapp.com'
+  ],
   credentials: true,
 }));
 
