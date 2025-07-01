@@ -11,19 +11,8 @@ const dashboardRoute = require('./routes/dashboardRoute');
 const app = express();
 
 app.use(cors({
-  origin: (origin, callback) => {
-    // Allow Vite dev server (host) and Docker Compose client service
-    if (
-      !origin ||
-      origin === 'http://localhost:5173' ||
-      origin.startsWith('http://127.0.0.1')
-    ) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
+  origin: 'https://main.d261zxqkub55fi.amplifyapp.com', // Replace with your actual Amplify domain
+  credentials: true,
 }));
 
 // Middleware
