@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 
+const API = import.meta.env.VITE_API_URL || 'http://localhost:4005';
+
 // ProtectedRoute component ensures only authenticated users can access certain routes
 const ProtectedRoute = ({ children }) => {
   // State to track authentication status
@@ -18,7 +20,7 @@ const ProtectedRoute = ({ children }) => {
       }
       try {
         // Verify the token by making a request to the backend, sending the token in headers
-        await axios.get('http://localhost:4005/auth/verifyUser', {
+        await axios.get(`${API}/auth/verifyUser`, {
           headers: { token }
         });
         setIsAuth(true); // If token is valid, user is authenticated

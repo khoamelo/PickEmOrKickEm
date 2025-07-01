@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+const API = import.meta.env.VITE_API_URL || 'http://localhost:4005';
+
 const Home = () => {
 
   const navigate = useNavigate();
@@ -16,7 +18,7 @@ const Home = () => {
       if (!token) return;
       try {
         // Request username using the JWT token
-        const res = await axios.get('http://localhost:4005/dashboard', {
+        const res = await axios.get(`${API}/dashboard`, {
           headers: { token }
         });
         setUsername(res.data.user_name);
@@ -48,7 +50,7 @@ const Home = () => {
     try {
       // Fetch player data from backend API
       const { data } = await axios.get(
-        `http://localhost:4005/api/v1/getPlayer/${encodeURIComponent(playerName)}`
+        `${API}/api/v1/getPlayer/${encodeURIComponent(playerName)}`
       );
 
       if (data.results === 0) {

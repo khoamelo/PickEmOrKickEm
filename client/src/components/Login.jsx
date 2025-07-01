@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+const API = import.meta.env.VITE_API_URL || 'http://localhost:4005';
+
 const Login = () => {
   const navigate = useNavigate();
   // State to hold form data and error messages
@@ -17,7 +19,7 @@ const Login = () => {
     setError('');
     try {
       // Send login request to backend API with email and password
-      const res = await axios.post('http://localhost:4005/auth/loginUser', form);
+      const res = await axios.post(`${API}/auth/loginUser`, form);
       // Store the JWT token in localStorage for authentication if successful
       localStorage.setItem('token', res.data.token);
 

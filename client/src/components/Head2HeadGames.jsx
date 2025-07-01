@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+const API = import.meta.env.VITE_API_URL || 'http://localhost:4005';
+
 const Head2HeadGames = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,7 +27,7 @@ const Head2HeadGames = () => {
     try {
       // Fetch head-to-head games from backend API
       const { data } = await axios.get(
-        `http://localhost:4005/api/v1/getHeadToHead/${playerData.player_id}/${oppTeam}`
+        `${API}/api/v1/getHeadToHead/${playerData.player_id}/${oppTeam}`
       );
 
       console.log('Player H2H data:', data);
