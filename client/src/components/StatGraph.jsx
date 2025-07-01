@@ -97,11 +97,6 @@ const StatGraph = () => {
             onClick={() => navigate('/check-player', { state: { playerData } })}>
             ⬅️ Back to Search
           </button>
-          <button
-            className='bg-gray-900 w-[205.5px] text-white border-2 border-gray-600 px-6 py-3 hover:text-green-500 hover:outline-none hover:border-green-500 transition duration-300'
-            onClick={() => window.location.reload()}>
-            Refresh
-          </button>
         </div>
       </div>
 
