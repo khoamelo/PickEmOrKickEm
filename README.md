@@ -1,6 +1,13 @@
 # Pick 'Em or Kick 'Em  
 *Analyze NBA player stats and performance trends to make smarter sports betting picks!*
 
+**Full Website**: [https://main.d261zxqkub55fi.amplifyapp.com/](https://main.d261zxqkub55fi.amplifyapp.com/)
+
+
+https://github.com/user-attachments/assets/e4a2d9de-549a-40d3-84b5-c86948dab778
+
+
+
 ## Built With:
 #### Frontend  
 * [![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)](https://reactjs.org/)  
@@ -110,4 +117,6 @@ Once you enter in all the required fields, you will be shown a bar graph of the 
 
 You can also adjust the minutes played to filter out games where players played a certain amount of minutes
 ![last_ngames_ss_results_v2](https://github.com/user-attachments/assets/00a8a339-c92e-42a8-9f1d-77db30d31c08)
+
+
 
