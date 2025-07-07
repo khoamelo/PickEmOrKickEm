@@ -15,6 +15,7 @@ https://github.com/user-attachments/assets/e4a2d9de-549a-40d3-84b5-c86948dab778
 * [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)  
 * [![Axios](https://img.shields.io/badge/Axios-5A29E4?logo=axios&logoColor=white)](https://axios-http.com/)  
 * [![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?logo=chartdotjs&logoColor=white)](https://www.chartjs.org/)  
+On login or registration, the client sends a request to the backend using Axios (`/auth/loginUser` or `/auth/registerUser`). If successful, a JWT is stored in the localStorage for the user. Routes that aren't the root page are protected by `ProtectedRoutes` component which sends a request to the backend (`auth/verifyUser`) to verify if the JWT is valid or if the user even has a JWT. If valid, users can access the routes, otherwise, they'll be redirected to the root/login page. After login, the user lands on the Home page where they search for NBA players. The search triggers an API call to the backend (`api/v1/getPlayer/:name`) and stores the payload in the `location` state as `playerData` while navigating to the `/check-player` route. Users can then view last 'N' games or head-2-head games of players in `/check-player` route. playerData is stored in the `location` state in both the `/last-n-games` and `/head-to-head` routes. In `/last-n-games`, users fill in information about the stat they want to check, the prop-line, and the number of games they wish to view. This triggers an API call to the backend (`/api/v1/getGames/playerID?n=<>`) which uses the `playerID` from `playerData` and `n` from the number of games filled out to get the 'n' game logs of the player, and sends that payload and the other information (prop-line, stat, number of games, etc.) to the `location` state in the `/results` route. Similarly, in `/head-to-head`, users fill out the same info except they must fill out the opposing team instead of number of games. This triggers an API call to the backend (`/api/v1/getHeadToHead/:player_id/:team_name`) to get the game logs of the player against the chosen opposing team, and sends that payload and the other information to the `location` state in the `/results` route. The data is displayed as an interactive bar graph of the relevant game logs using `Chart.js`.
 
 #### Backend  
 * [![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white)](https://nodejs.org/)  
@@ -22,6 +23,33 @@ https://github.com/user-attachments/assets/e4a2d9de-549a-40d3-84b5-c86948dab778
 * [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)  
 * [![JWT](https://img.shields.io/badge/JWT-000000?logo=jsonwebtokens&logoColor=white)](https://jwt.io/)  
 * [![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)](https://www.python.org/)  
+The `nba_api` was used to populate the PSQL tables with the latest active players and gamelogs using Python scripts.
+
+
+  API Routes
+  
+  `POST /auth/registerUser` - Register a new user.
+
+  `POST /auth/loginUser` - Login and receive a JWT.
+
+  `GET /auth/verifyUser` - Verify JWT for protected routes.
+
+  `GET /dashboard` - Get the logged-in user's name (protected).
+
+  `GET /api/v1/getPlayer/:name` - Get player info by name.
+
+  `GET /api/v1/getGames/:player_id?n=<n>` - Get last N games for a player.
+
+  `GET /api/v1/getHeadToHead/:player_id/:team_name` - Get games vs. a specific team.
+
+  `GET /api/v1/playerPlayedOpponentDidNot/:playerA_id/:playerB_id/:teamA/:teamB` - Find games where player A played, but played B didn't
+
+
+  Middleware:
+  
+  `authorization.js` - Checks JWT validity for protected routes
+
+  `validInfo.js` - Validates registration/login input
 
 #### DevOps
 * [![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)  
