@@ -26,7 +26,7 @@
 Here's how you can get this project started up locally
 
 ### Prerequisites:
-Docker and Docker Compose
+Install Docker and Docker Compose (https://www.docker.com/products/docker-desktop/)
 
 
 ### Installation & Set Up:
@@ -85,4 +85,29 @@ docker-compose up --build
 Then repeat step 5
 
 ## Usage:
-Once you have installed and set up everything, 
+Once you have installed and set up everything, you will be prompted to sign in or register. If you don't have an account which you probably don't if you just installed and set up for the first time, or repopulated the DB, then register, then sign in
+![login_page_ss](https://github.com/user-attachments/assets/47580a90-881e-4ae7-9481-1e012a54aafc)
+
+Once signed in, you will be prompted to enter an active NBA player name to check stats for (The matching is case-insensitive and accent-insensitive, but sensitive to punctuation such as periods and hyphens (e.g., P.J. Tucker, Shai Gilegous-Alexander, etc.))
+![home_page_ss](https://github.com/user-attachments/assets/4f017379-00f8-4524-8f9a-d39c087f22dc)
+
+After choosing a player, you will prompted to choose to check either of the following "Last 'N' Games" or "Head-2-Head Games." Last 'N' Games will visualize the game logs of the players last 'n' games, and Head-2-Head games will visualize the game logs of players playing against a specific team
+![check_player_ss](https://github.com/user-attachments/assets/c34b04c2-b1b1-462b-8aa8-82a9e3e91d2c)
+
+If Last 'N' Games is chosen, you will be asked to choose a stat to check (points, rebounds, assists, points + rebounds, etc.), a prop-line that a betting site might have (SGA over *31.5* points), and the number of games you want to view
+![last_n_games_ss](https://github.com/user-attachments/assets/9904b458-8840-4710-8513-5f3d8783f3ee)
+
+Similarly, if Head-2-Head Games is chosen, you will asked to choose a stat to check, a prop-line, and the opposing team
+![h2h_games_ss](https://github.com/user-attachments/assets/3a686db5-7594-4f6a-960d-0d2829396503)
+
+Once you enter in all the required fields, you will be shown a bar graph of the games you chose to visualize for the player, and whether the player hit over their prop-line (green), hit under (red), or hit exactly on the prop-line (gray). Three gauges are on top of the bar graph which gives a percentage of the player hitting over, under, or pushing the prop-line. Hovering over each bar will give you the date of the match played, the opponent and whether or not they played home or away, and the exact stat the player got.
+
+*Last N Games*
+![last_n_games_ss_results](https://github.com/user-attachments/assets/a2e89554-5cc1-4f01-89ea-d7ca40215465)
+
+*H2H Games*
+![h2h_games_results](https://github.com/user-attachments/assets/6fcba730-f02c-4a0e-9706-f00259c4829a)
+
+You can also adjust the minutes played to filter out games where players played a certain amount of minutes
+![last_ngames_ss_results_v2](https://github.com/user-attachments/assets/00a8a339-c92e-42a8-9f1d-77db30d31c08)
+
